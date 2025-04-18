@@ -1,0 +1,96 @@
+---
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  "/api/documents/analyze":
+    post:
+      tags:
+      - document-controller
+      summary: Analyze a document using a file upload
+      operationId: analyzeDocument
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - files
+              type: object
+              properties:
+                files:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Document analyzed successfully
+          content:
+            "*/*":
+              schema:
+                type: string
+        '500':
+          description: Error analyzing document
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/api/documents/analyze1":
+    post:
+      tags:
+      - document-controller
+      summary: Analyze a document using a file upload
+      operationId: analyzeDocument1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Document analyzed successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/OcrResponse"
+        '500':
+          description: Error analyzing document
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/OcrResponse"
+components:
+  schemas:
+    DocumentDetails1:
+      type: object
+      properties:
+        dateOfIssue:
+          type: string
+        firstName:
+          type: string
+        countryRegion:
+          type: string
+        documentType:
+          type: string
+        lastName:
+          type: string
+        documentNumber:
+          type: string
+        izData:
+          type: string
+        nationality:
+          type: string
+        placeOfIssue:
+          type: string
+        placeOfBirth:
+          type: string
+        dateOfExpiration:
+          type: string
+    OcrResponse:
+      type: object
+      properties:
+        documentDetails:
+          "$ref": "#/components/schemas/DocumentDetails1"
